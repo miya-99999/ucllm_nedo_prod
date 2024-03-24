@@ -40,12 +40,14 @@ def exec_hojichar_deduplication(lines: list[str], output_base: str, stats: list[
 def dedup_minhashlsh(input_dir: str, output_base: str):
     os.makedirs(output_base, exist_ok=True)
     remained_lines, stats = [], []
-    for input_file in os.listdir(input_dir): # 途中から始めるならこの辺りに処理を加える（存在するファイルをスキップする）
+    for input_file in os.listdir(input_dir):
         if not input_file.endswith(".jsonl"):
             continue
-        if input_file in ['82.jsonl', '50.jsonl', '49.jsonl', '98.jsonl', '7.jsonl', '9.jsonl', '52.jsonl', '83.jsonl', '21.jsonl', '90.jsonl', '68.jsonl', '1.jsonl', '43.jsonl', '24.jsonl', '44.jsonl', '0.jsonl', '81.jsonl', '80.jsonl', '15.jsonl', '57.jsonl', '31.jsonl', '41.jsonl', '96.jsonl', '55.jsonl', '13.jsonl', '95.jsonl', '6.jsonl', '42.jsonl', '53.jsonl', '69.jsonl', '5.jsonl', '29.jsonl', '46.jsonl', '63.jsonl', '35.jsonl', '11.jsonl', '28.jsonl', '99.jsonl', '65.jsonl', '51.jsonl', '32.jsonl', '36.jsonl', '64.jsonl', '33.jsonl', '61.jsonl', '45.jsonl', '8.jsonl', '34.jsonl', '10.jsonl', '66.jsonl', '30.jsonl', '38.jsonl', '48.jsonl', '73.jsonl', '77.jsonl', '60.jsonl', '89.jsonl', '47.jsonl', '22.jsonl', '86.jsonl', '93.jsonl', '16.jsonl', '59.jsonl']:
-            continue
+        # if not input_file in ["94.jsonl"]: # 途中から始めるならこの辺りに処理を加える（存在するファイルをスキップする）
+        #     print("Skipping file: ", input_file)
+        #     continue
 
+        print("Not skipping file: ", input_file)
         with open(os.path.join(input_dir, input_file)) as fp:
             json_lines = fp.readlines() # JSONLファイルを読み込む
 
@@ -76,7 +78,8 @@ def main():
     args = parser.parse_args() # 設定
 
     start = datetime.now() # 現在の日時を取得する
-    output_base = os.path.join(args.output_dir, start.strftime("%Y%m%d%H%M%S")) # 日付をもとに出力ディレクトリを指定する
+    output_base = os.path.join(args.output_dir, start.strftime("%Y%m%d%H%M%S")) # 日付をもとに出力ディレクトリを指定する/
+    # output_base = os.path.join(args.output_dir, "20240320041037") # 日付をもとに出力ディレクトリを指定する
 
     dedup_minhashlsh(input_dir=args.input_dir, output_base=output_base) # 重複除去を行う
 

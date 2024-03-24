@@ -11,8 +11,6 @@
 import os
 import sys
 print(f"{os.getcwd() = }")
-# sys.path.append(os.path.join(os.environ["HOME"], "Desktop/work/miniforge/llm_dev/train/scripts/common/")) # 自分の環境のパスに変更してください。
-# sys.path.append("/content/drive/My Drive/トークナイザー検証/scripts/common/") # Google Colab
 
 
 import argparse
@@ -56,8 +54,9 @@ def main():
         character_coverage=args.character_coverage, # 文字カバレッジ
         model_type=args.model_type, # モデルのタイプ
         num_threads=args.num_threads, # スレッド数
+        add_dummy_prefix=False, # ダミープレフィックスの追加
         train_extremely_large_corpus=args.train_extremely_large_corpus, # 大規模コーパスのトレーニング
-        normalization_rule_name='identity', # 正規化の設定 identityは正規化を行わない
+        normalization_rule_name='identity', # 正規化の設定 identityは正規化を行わない nfkcは正規化を行う
         user_defined_symbols=[ # ユーザー定義のシンボル
             BOS_TOKEN, # テキストの先頭を表すトークン
             EOS_TOKEN, # テキストの末尾を表すトークン
